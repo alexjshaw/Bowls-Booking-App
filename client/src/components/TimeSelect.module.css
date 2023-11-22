@@ -1,0 +1,9 @@
+.timeButton {
+  padding: var(--mantine-spacing-xs);
+}
+
+.selectedTimeButton {
+  background-color: blue;
+  color: white;
+  padding: var(--mantine-spacing-xs);
+}
