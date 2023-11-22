@@ -3,7 +3,7 @@ const { getDB } = require('../../db/connect');
 
 const router = express.Router();
 
-router.get('/rinks', async (req, res) => {
+router.get('/', async (req, res) => {
   const db = getDB();
   const collection = db.collection('Rinks');
   const rinks = await collection.find({}).toArray();
