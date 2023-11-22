@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon --experimental-modules index.mjs",
+    "dev": "nodemon --experimental-modules index.js",
     "lint": "eslint --fix .",
     "test": "jest"
   },
