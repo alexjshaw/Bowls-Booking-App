@@ -2,24 +2,26 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const { connectToDB } = require('./db/connect');
+const { connectToDB } = require('./database/connect');
 
-// Import routes
-const rinksRoute = require('./src/routes/rinks');
+const rinksRoute = require('./routes/rinks');
+const clubRoute = require('./routes/club')
+const userRoute = require('./routes/user')
 
-// Create the Express application
 const app = express();
 
-// Apply middleware
-app.use(cors()); // Enable CORS
-app.use(helmet()); // Enhance API's security
-app.use(express.json()); // Parse JSON bodies
-app.use(morgan('dev')); // Log HTTP requests
+// middleware
+app.use(cors());
+app.use(helmet());
+app.use(express.json());
+app.use(morgan('dev'));
 
-// Define routes
-app.use('/rinks', rinksRoute);
+// routes
+app.use('/rink', rinksRoute);
+app.use('/club', clubRoute)
+app.use('/user', userRoute)
 
-// Connect to MongoDB and start the server
+// start server and connect to mongoDB
 const port = process.env.PORT || 5000;
 
 connectToDB().then(() => {
