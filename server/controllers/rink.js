@@ -16,6 +16,17 @@ const createRink = async (req, res) => {
   }
 }
 
+const getRinksByClub = async (req, res) => {
+  try {
+    const clubId = req.params.clubId;
+    const rinks = await rinkDatabase.getRinksByClub(clubId);
+    res.json(rinks);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+};
+
 module.exports = {
-  createRink
+  createRink,
+  getRinksByClub
 }

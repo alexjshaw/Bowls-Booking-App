@@ -11,6 +11,15 @@ class Rink {
       throw new Error(error.message)
     }
   }
+
+  async getRinksByClub(clubId) {
+    try {
+      return await RinkModel.find({ club: clubId });
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
 }
 
 module.exports = new Rink()
