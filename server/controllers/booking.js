@@ -18,6 +18,21 @@ const createBooking = async (req, res) => {
   }
 };
 
+const getBookings = async (req, res) => {
+  try {
+    const query = {};
+    if (req.query.club) query.club = req.query.club;
+    if (req.query.rink) query.rink = req.query.rink;
+    if (req.query.user) query.user = req.query.user;
+
+    const bookings = await bookingDatabase.getBookings(query);
+    res.json(bookings);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+};
+
 module.exports = {
-  createBooking
+  createBooking,
+  getBookings
 }
