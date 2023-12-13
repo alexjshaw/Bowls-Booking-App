@@ -14,10 +14,10 @@ class User {
 
   async getUser(query = {}) {
     try {
-      const user = await mongoose.model('User').findOne(query).exec();
+      const user = await UserModel.findOne(query).exec(); // Use UserModel directly
       return user;
     } catch (error) {
-      throw error; // You might want to handle this more gracefully
+      throw error;
     }
   }
 }

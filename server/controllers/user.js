@@ -26,16 +26,17 @@ const getUser = async (req, res) => {
       return res.status(400).send('Invalid ID format');
     }
 
-    const user = await User.getUser({ _id: userId });
+    const user = await userDatabase.getUser({ _id: userId });
     if (!user) {
       return res.status(404).send('User not found');
     }
 
     res.json(user);
   } catch (error) {
-    res.status(500).send('Server error');
+    res.status(500).send('Server error', error);
   }
 };
+
 
 
 module.exports = {
