@@ -15,8 +15,21 @@ export const UserProvider = ({ children }) => {
     club: ''
   });
 
+  const fetchUser = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/${userId}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const userData = await response.json();
+      setUser(userData);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, fetchUser }}>
       {children}
     </UserContext.Provider>
   );
