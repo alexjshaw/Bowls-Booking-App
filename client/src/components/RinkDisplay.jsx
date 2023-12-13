@@ -5,22 +5,9 @@ import { Box, Text, Button } from '@mantine/core';
 import { useUser } from "../contexts/UserContext";
 
 export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
-  // const rinks = [
-  //   { number: 1 },
-  //   { number: 2 },
-  //   { number: 3 },
-  //   { number: 4 },
-  //   { number: 5 },
-  //   { number: 6 },
-  // ];
-
-  // const bookings = [
-  //   { rink: 1, date: '2023-11-21', slot: '8-10am', bookedBy: "Jane Doe" },
-  //   { rink: 3, date: '2023-11-21', slot: '4-6pm', bookedBy: "Adam Shaw" },
-  //   { rink: 2, date: '2023-11-22', slot: '12-2pm', bookedBy: "Joe Bloggs" },
-  // ];
 
   const [rinks, setRinks] = useState([]);
+  const [bookings, setBookings] = useState([]);
   const { user } = useUser();
 
   useEffect(() => {
@@ -37,20 +24,33 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
       }
     };
 
+    const fetchBookings = async () => {
+      try {
+        const rinkIds = rinks.map(rink => `rink=${rink._id}`).join('&');
+        const response = await fetch(`http://localhost:5000/booking?${rinkIds}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const bookingsData = await response.json();
+        setBookings(bookingsData);
+      } catch (error) {
+        console.error('Error fetching bookings:', error);
+      }
+    };    
+
     if (user.club) {
       fetchRinks();
+      fetchBookings();
     }
   }, [user.club, currentDate, selectedTimeSlot]);
 
-
-  // const getBookingDetails = (rinkNumber) => {
-  //   return bookings.find(
-  //     (booking) =>
-  //       booking.rink === rinkNumber &&
-  //       booking.date === currentDate.format('YYYY-MM-DD') &&
-  //       booking.slot === selectedTimeSlot
-  //   );
-  // };
+  const isRinkBooked = (rinkId) => {
+    return bookings.some(booking => 
+      booking.rink._id === rinkId && 
+      booking.date === currentDate.format('YYYY-MM-DD') && 
+      booking.time === selectedTimeSlot
+    );
+  };
 
   const handleBookRink = async (rinkId) => {
     const bookingData = {
@@ -85,24 +85,20 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
   const testFunction = () => {
     console.log('currentDate', currentDate)
     console.log('selectedTimeSlot', selectedTimeSlot)
+    console.log('bookings', bookings)
   }
 
   return (
     <Box className={classes.rinkContainer}>
       {rinks.map((rink) => {
-        // const booking = getBookingDetails(rink.number);
-        // const isAvailable = !booking;
-        let booking
-        let isAvailable = true
-
+        const booked = isRinkBooked(rink._id);
         return (
-          <Box key={rink.number} className={classes.rinkCard}>
+          <Box key={rink._id} className={classes.rinkCard}>
             <Box className={classes.rinkInfo}>
               <Text>Rink {rink.number}</Text>
-              <Text>Status: {booking ? `Booked by ${booking.bookedBy}` : 'Available'}</Text>
+              <Text>Status: {booked ? `Booked by ${bookings.find(b => b.rink._id === rink._id).user.firstName}` : 'Available'}</Text>
             </Box>
-            
-            {isAvailable && (
+            {!booked && (
               <Box className={classes.bookButtonContainer}>
                 <Button onClick={() => handleBookRink(rink._id)}>Book</Button>
               </Box>
@@ -110,7 +106,7 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
           </Box>
         );
       })}
-      <Button onClick={() => testFunction()}>Test</Button>
+<Button onClick={() => testFunction()}>Test</Button>
     </Box>
   );
 }
