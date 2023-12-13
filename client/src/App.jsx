@@ -7,11 +7,13 @@ import TestPage from "./pages/TestPage.jsx"
 import { Center, Box, Container } from '@mantine/core';
 import classes from "./App.module.css"
 import Footer from './components/Footer.jsx';
+import { UserProvider } from './contexts/UserContext.js';
 
 function App() {
 
   return (
     <MantineProvider>
+      <UserProvider>
       <Box className={classes.mainBox}>
         <Box className={classes.content}>
           <TestPage />
@@ -20,6 +22,7 @@ function App() {
           <Footer />
         </Box>
       </Box>
+      </UserProvider>
     </MantineProvider>
   )
 }
