@@ -8,6 +8,7 @@ Get all bookings for a single user
 Get all bookings for a specific club & date
 */
 
-router.get('/', bookingController.getBookings)
+router.post('/', bookingController.createBooking)
+// router.get('/', bookingController.getBookings)
 
 module.exports = router
