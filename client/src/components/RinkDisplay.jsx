@@ -1,11 +1,10 @@
-import classes from "./RinkDisplay.module.css"
+import classes from "./RinkDisplay.module.css";
 
-import React, { useEffect, useState } from 'react';
-import { Box, Text, Button } from '@mantine/core';
+import React, { useEffect, useState } from "react";
+import { Box, Text, Button } from "@mantine/core";
 import { useUser } from "../contexts/UserContext";
 
 export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
-
   const [rinks, setRinks] = useState([]);
   const [bookings, setBookings] = useState([]);
   const { user } = useUser();
@@ -13,42 +12,48 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
   useEffect(() => {
     const fetchRinks = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/rink/byClub/${user.club}`);
+        const response = await fetch(
+          `http://localhost:5000/rink/byClub/${user.club}`
+        );
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const rinksData = await response.json();
         setRinks(rinksData);
       } catch (error) {
-        console.error('Error fetching rinks:', error);
+        console.error("Error fetching rinks:", error);
       }
     };
 
     const fetchBookings = async () => {
       try {
-        const rinkIds = rinks.map(rink => `rink=${rink._id}`).join('&');
-        const response = await fetch(`http://localhost:5000/booking?${rinkIds}`);
+        const rinkIds = rinks.map((rink) => `rink=${rink._id}`).join("&");
+        const response = await fetch(
+          `http://localhost:5000/booking?${rinkIds}`
+        );
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const bookingsData = await response.json();
         setBookings(bookingsData);
       } catch (error) {
-        console.error('Error fetching bookings:', error);
+        console.error("Error fetching bookings:", error);
       }
-    };    
+    };
 
     if (user.club) {
       fetchRinks();
       fetchBookings();
     }
-  }, [user.club, currentDate, selectedTimeSlot]);
+  }, [user.club, currentDate, selectedTimeSlot, bookings]);
 
   const isRinkBooked = (rinkId) => {
-    return bookings.some(booking => 
-      booking.rink._id === rinkId && 
-      booking.date === currentDate.format('YYYY-MM-DD') && 
-      booking.time === selectedTimeSlot
+    return bookings.some(
+      (booking) =>
+        booking.rink._id === rinkId &&
+        new Date(booking.date).toDateString() ===
+          new Date(currentDate.format("YYYY-MM-DD")).toDateString() &&
+        booking.time === selectedTimeSlot
     );
   };
 
@@ -59,8 +64,7 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
       date: currentDate.format('YYYY-MM-DD'),
       time: selectedTimeSlot,
     };
-    console.log('bookingData', bookingData)
-
+  
     try {
       const response = await fetch('http://localhost:5000/booking', {
         method: 'POST',
@@ -69,24 +73,26 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
         },
         body: JSON.stringify(bookingData),
       });
-
+  
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
-      // Handle the response here. For example, you might want to update the state to reflect the new booking
-      console.log('Booking successful', await response.json());
+  
+      const newBooking = await response.json();
+  
+      setBookings([...bookings, { ...newBooking, rink: { _id: rinkId }, user: { firstName: user.firstName, lastName: user.lastName } }]);
     } catch (error) {
       console.error('Error creating booking:', error);
     }
   };
-
+  
 
   const testFunction = () => {
-    console.log('currentDate', currentDate)
-    console.log('selectedTimeSlot', selectedTimeSlot)
-    console.log('bookings', bookings)
-  }
+    console.log("currentDate", currentDate);
+    console.log("currentDate.format", currentDate.format("YYYY-MM-DD"));
+    console.log("selectedTimeSlot", selectedTimeSlot);
+    console.log("bookings", bookings);
+  };
 
   return (
     <Box className={classes.rinkContainer}>
@@ -96,7 +102,18 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
           <Box key={rink._id} className={classes.rinkCard}>
             <Box className={classes.rinkInfo}>
               <Text>Rink {rink.number}</Text>
-              <Text>Status: {booked ? `Booked by ${bookings.find(b => b.rink._id === rink._id).user.firstName}` : 'Available'}</Text>
+              <Text>
+                Status:{" "}
+                {booked
+                  ? `Booked by ${
+                      bookings.find((b) => b.rink._id === rink._id).user
+                        .firstName
+                    } ${
+                      bookings.find((b) => b.rink._id === rink._id).user
+                        .lastName
+                    }`
+                  : "Available"}
+              </Text>{" "}
             </Box>
             {!booked && (
               <Box className={classes.bookButtonContainer}>
@@ -106,7 +123,7 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
           </Box>
         );
       })}
-<Button onClick={() => testFunction()}>Test</Button>
+      <Button onClick={() => testFunction()}>Test</Button>
     </Box>
   );
 }
