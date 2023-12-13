@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const UserContext = createContext();
@@ -17,7 +17,7 @@ export const UserProvider = ({ children }) => {
 
   const fetchUser = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5000/${userId}`);
+      const response = await fetch(`http://localhost:5000/user/${userId}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -27,6 +27,11 @@ export const UserProvider = ({ children }) => {
       console.error('Error fetching user data:', error);
     }
   };
+
+  useEffect(() => {
+    const userId = '6560d8cd057a77eed11715ea'; // This will be dynamic in the future
+    fetchUser(userId);
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, setUser, fetchUser }}>
@@ -38,3 +43,5 @@ export const UserProvider = ({ children }) => {
 UserProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+export default UserContext;
