@@ -7,6 +7,7 @@ import { useUser } from "../contexts/UserContext";
 export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
   const [rinks, setRinks] = useState([]);
   const [bookings, setBookings] = useState([]);
+  const [triggerRefetch, setTriggerRefetch] = useState(false);
   const { user } = useUser();
 
   useEffect(() => {
@@ -45,7 +46,7 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
       fetchRinks();
       fetchBookings();
     }
-  }, [user.club, currentDate, selectedTimeSlot, bookings]);
+  }, [user.club, currentDate, selectedTimeSlot, triggerRefetch]);
 
   const isRinkBooked = (rinkId) => {
     return bookings.some(
@@ -78,13 +79,12 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
         throw new Error('Network response was not ok');
       }
   
-      const newBooking = await response.json();
-  
-      setBookings([...bookings, { ...newBooking, rink: { _id: rinkId }, user: { firstName: user.firstName, lastName: user.lastName } }]);
+      setTriggerRefetch(prev => !prev);
     } catch (error) {
       console.error('Error creating booking:', error);
     }
   };
+  
   
 
   const testFunction = () => {
