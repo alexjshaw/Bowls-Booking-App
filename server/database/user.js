@@ -11,6 +11,15 @@ class User {
       throw new Error(error.message)
     }
   }
+
+  async getUser(query = {}) {
+    try {
+      const user = await mongoose.model('User').findOne(query).exec();
+      return user;
+    } catch (error) {
+      throw error; // You might want to handle this more gracefully
+    }
+  }
 }
 
 module.exports = new User()

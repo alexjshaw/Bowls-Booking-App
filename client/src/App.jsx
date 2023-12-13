@@ -3,6 +3,8 @@ import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 // import Router from './routes';
 // import './App.css'
+import React, { useEffect, useContext } from 'react';
+
 import TestPage from "./pages/TestPage.jsx"
 import { Center, Box, Container } from '@mantine/core';
 import classes from "./App.module.css"

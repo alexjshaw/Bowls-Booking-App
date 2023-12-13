@@ -19,6 +19,26 @@ const createUser = async (req, res) => {
   }
 }
 
+const getUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).send('Invalid ID format');
+    }
+
+    const user = await User.getUser({ _id: userId });
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+};
+
+
 module.exports = {
-  createUser
+  createUser,
+  getUser
 }
