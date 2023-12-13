@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const rinkModel = require('../models/rink')
+const userModel = require('../models/user')
+const clubModel = require('../models/club')
 
 const url = 'mongodb://127.0.0.1:27017/BowlsBooking';
 
@@ -10,6 +12,8 @@ async function connectToDB() {
 
     // Initialise models
     await rinkModel.init();
+    await userModel.init();
+    await clubModel.init();
 
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);

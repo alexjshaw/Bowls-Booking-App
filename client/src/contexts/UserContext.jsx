@@ -29,7 +29,7 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const userId = '6560d8cd057a77eed11715ea'; // This will be dynamic in the future
+    const userId = '6579c381f0143aa691b4f945'; // This will be dynamic in the future
     fetchUser(userId);
   }, []);
 

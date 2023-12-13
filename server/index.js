@@ -7,6 +7,7 @@ const { connectToDB } = require('./database/connect');
 const rinksRoute = require('./routes/rinks');
 const clubRoute = require('./routes/club')
 const userRoute = require('./routes/user')
+const bookingRoute = require('./routes/booking')
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(morgan('dev'));
 app.use('/rink', rinksRoute);
 app.use('/club', clubRoute)
 app.use('/user', userRoute)
+app.use('/booking', bookingRoute)
 
 // start server and connect to mongoDB
 const port = process.env.PORT || 5000;
