@@ -1,21 +1,16 @@
-import React from 'react';
 import { useRoutes } from "react-router-dom";
-import TestPage from '../pages/TestPage';
-
-// const routes = [
-//   {
-//     path: '/',
-//     element: <TestPage />,
-//   },
-// ];
+import BookingPage from '../pages/BookingPage';
+import MyBookingsPage from "../pages/MyBookingsPage";
 
 export default function Routes() {
   return useRoutes([
     {
       path: '/',
-      element: <TestPage />
+      element: <BookingPage />
+    },
+    {
+      path: '/bookings',
+      element: <MyBookingsPage />
     }
   ])
 }
-
-// export default routes;

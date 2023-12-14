@@ -1,15 +1,12 @@
 import { useState } from "react";
-import reactLogo from "../assets/react.svg";
-import viteLogo from "/vite.svg";
-import classes from "./TestPage.module.css";
+import classes from "./BookingPage.module.css";
 import dayjs from "dayjs";
 
 import Header from "../components/Header";
 import RinkDisplay from "../components/RinkDisplay";
 import TimeSelect from "../components/TimeSelect";
-import Footer from "../components/Footer";
 
-import { Center, Box, Container } from "@mantine/core";
+import { Center, Box } from "@mantine/core";
 
 export default function TestPage() {
   const [currentDate, setCurrentDate] = useState(dayjs());
@@ -35,10 +32,6 @@ export default function TestPage() {
           />
         </Box>
       </Box>
-
-      {/* <Box className={classes.footer}>
-        <Footer />
-      </Box> */}
     </Center>
   );
 }

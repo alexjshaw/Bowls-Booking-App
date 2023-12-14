@@ -1,14 +1,12 @@
-import React, { useEffect, useContext } from 'react';
-import { MantineProvider } from '@mantine/core';
-import '@mantine/core/styles.css';
-import '@mantine/dates/styles.css';
+import { MantineProvider } from "@mantine/core";
+import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
 // import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import TestPage from "./pages/TestPage.jsx";
-import { Center, Box, Container } from '@mantine/core';
+import { Box } from "@mantine/core";
 import classes from "./App.module.css";
-import Footer from './components/Footer.jsx';
-import { useUser } from './contexts/UserContext.jsx';
-import Router from './routes'
+import Footer from "./components/Footer.jsx";
+import { useUser } from "./contexts/UserContext.jsx";
+import Router from "./routes";
 
 function App() {
   const { user } = useUser();
@@ -17,7 +15,6 @@ function App() {
     <MantineProvider>
       <Box className={classes.mainBox}>
         <Box className={classes.content}>
-          {/* <TestPage /> */}
           <Router />
         </Box>
         <Box className={classes.footer}>

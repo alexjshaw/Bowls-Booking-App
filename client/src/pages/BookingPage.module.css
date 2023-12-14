@@ -8,7 +8,7 @@
   flex-direction: column;
 }
 
-.header, .footer {
+.header {
   height: 50px;
   background-color: var(--mantine-color-gray-2);
   width: 100%;

@@ -14,5 +14,5 @@
 }
 
 .footer {
-  padding-bottom: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-md)
 }
