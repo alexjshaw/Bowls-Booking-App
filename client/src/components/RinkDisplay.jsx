@@ -1,6 +1,6 @@
 import classes from "./RinkDisplay.module.css";
-
 import React, { useEffect, useState } from "react";
+import dayjs from 'dayjs';
 import { Box, Text, Button } from "@mantine/core";
 import { useUser } from "../contexts/UserContext";
 
@@ -57,6 +57,11 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
         booking.time === selectedTimeSlot
     );
   };
+
+  const isDateInPast = (date) => {
+    return dayjs().isAfter(date, 'day');
+  };
+
 
   const handleBookRink = async (rinkId) => {
     const bookingData = {
@@ -115,7 +120,7 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
                   : "Available"}
               </Text>{" "}
             </Box>
-            {!booked && (
+            {!booked && !isDateInPast(currentDate) && (
               <Box className={classes.bookButtonContainer}>
                 <Button onClick={() => handleBookRink(rink._id)}>Book</Button>
               </Box>
