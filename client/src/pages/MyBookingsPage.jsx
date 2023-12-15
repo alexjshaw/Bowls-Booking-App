@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Center, Box, Button } from "@mantine/core";
+import { Center, Box, Button, Title, Container } from "@mantine/core";
 import classes from "./MyBookingsPage.module.css";
 import { useUser } from "../contexts/UserContext";
 import BookingCard from "../components/BookingCard";
@@ -38,36 +38,39 @@ export default function MyBookingsPage() {
   };
 
   const timeSlotOrder = {
-    '8-10am': 1,
-    '10-12pm': 2,
-    '12-2pm': 3,
-    '2-4pm': 4,
-    '4-6pm': 5,
-    '6-8pm': 6,
+    "8-10am": 1,
+    "10-12pm": 2,
+    "12-2pm": 3,
+    "2-4pm": 4,
+    "4-6pm": 5,
+    "6-8pm": 6,
   };
 
   const sortedBookings = bookings
-  .filter(booking => isUpcoming(booking.date))
-  .sort((a, b) => {
-    const dateA = dayjs(a.date);
-    const dateB = dayjs(b.date);
-    if (dateA.isSame(dateB, 'day')) {
-      return timeSlotOrder[a.time] - timeSlotOrder[b.time];
-    }
-    return dateA.isAfter(dateB) ? 1 : -1;
-  });
-
+    .filter((booking) => isUpcoming(booking.date))
+    .sort((a, b) => {
+      const dateA = dayjs(a.date);
+      const dateB = dayjs(b.date);
+      if (dateA.isSame(dateB, "day")) {
+        return timeSlotOrder[a.time] - timeSlotOrder[b.time];
+      }
+      return dateA.isAfter(dateB) ? 1 : -1;
+    });
 
   const testFunction = () => {
     console.log(bookings);
   };
 
   return (
-    <Center className={classes.center}>
-      {sortedBookings.map((booking) => (
-        <BookingCard key={booking._id} booking={booking} />
-      ))}
-      <Button onClick={() => testFunction()}>Log Bookings</Button>
-    </Center>
+    <div className={classes.pageContainer}> {/* Add a wrapper div */}
+    <Title order={1} className={classes.pageTitle}>My Bookings</Title> {/* Add Title component */}
+
+      <Center className={classes.center}>
+        {sortedBookings.map((booking) => (
+          <BookingCard key={booking._id} booking={booking} />
+        ))}
+        <Button onClick={() => testFunction()}>Log Bookings</Button>
+      </Center>
+</div>
   );
 }

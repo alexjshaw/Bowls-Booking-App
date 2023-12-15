@@ -4,4 +4,16 @@
   background-color: var(--mantine-color-yellow-1);
   display: flex;
   flex-direction: column;
+  flex: 1
+}
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure it takes full height */
+}
+
+.pageTitle {
+  text-align: center; /* Center the title */
+  margin: 20px 0; /* Add some margin */
 }
