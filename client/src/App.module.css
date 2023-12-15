@@ -1,18 +1,50 @@
-.mainBox {
+/* .mainBox {
   padding-top: var(--mantine-spacing-md);
   min-height: 100dvh;
   width: 100vw;
   background-color: var(--mantine-color-red-1);
   display: flex;
   flex-direction: column;
+} */
+
+.fullViewportContainer {
+  min-height: 100dvh; /* Full viewport height */
+  max-width: 100vw;
+  width: 100%; /* Full viewport width */
+  display: flex; /* Flexbox layout for inner components */
+  flex-direction: column; /* Adjust as needed */
+  background-color: var(--mantine-color-red-2);
+  scrollbar-gutter: stable both-edges;
 }
 
-.content {
+/* .content {
   flex: 1;
   display: flex;
   justify-content: center;
+} */
+
+.contentBox {
+  max-width: 1200px;
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  background-color: var(--mantine-color-blue-2);
 }
 
-.footer {
+/* .footer {
   padding: var(--mantine-spacing-md)
+} */
+
+.navSection {
+  height: 80px; /* Fixed height */
+  width: 100%; /* Full width */
+  position: fixed; /* Fix to the bottom */
+  bottom: 0; /* At the bottom */
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  align-items: center; /* Center buttons vertically */
+  background-color: var(--mantine-color-green-2);
+  /* Additional styling */
 }

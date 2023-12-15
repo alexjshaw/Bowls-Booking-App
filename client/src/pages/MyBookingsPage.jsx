@@ -62,15 +62,16 @@ export default function MyBookingsPage() {
   };
 
   return (
-    <div className={classes.pageContainer}> {/* Add a wrapper div */}
-    <Title order={1} className={classes.pageTitle}>My Bookings</Title> {/* Add Title component */}
-
-      <Center className={classes.center}>
+    <>
+      <Title order={1} className={classes.pageTitle}>
+        My Bookings
+      </Title>
+      <Center className={classes.centeredContainer}>
         {sortedBookings.map((booking) => (
           <BookingCard key={booking._id} booking={booking} />
         ))}
         <Button onClick={() => testFunction()}>Log Bookings</Button>
       </Center>
-</div>
+    </>
   );
 }

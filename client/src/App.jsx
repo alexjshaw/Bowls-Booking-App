@@ -1,6 +1,3 @@
-import { MantineProvider } from "@mantine/core";
-import "@mantine/core/styles.css";
-import "@mantine/dates/styles.css";
 // import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Box } from "@mantine/core";
 import classes from "./App.module.css";
@@ -12,16 +9,14 @@ function App() {
   const { user } = useUser();
 
   return (
-    <MantineProvider>
-      <Box className={classes.mainBox}>
-        <Box className={classes.content}>
+      <Box className={classes.fullViewportContainer}>
+        <Box className={classes.contentBox}>
           <Router />
         </Box>
-        <Box className={classes.footer}>
+        <Box className={classes.navSection}>
           <Footer />
         </Box>
       </Box>
-    </MantineProvider>
   );
 }
 

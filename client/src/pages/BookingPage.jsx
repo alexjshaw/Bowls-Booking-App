@@ -13,7 +13,7 @@ export default function TestPage() {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("8-10am");
 
   return (
-    <Center className={classes.center}>
+    <>
       <Box className={classes.header}>
         <Header currentDate={currentDate} setCurrentDate={setCurrentDate} />
       </Box>
@@ -32,6 +32,6 @@ export default function TestPage() {
           />
         </Box>
       </Box>
-    </Center>
+    </>
   );
 }
