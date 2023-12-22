@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { auth, sendPasswordReset } from "../utils/firebase";
-import "./Reset.css";
+import { TextInput, Button, Box, Container, Anchor } from "@mantine/core";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { sendPasswordReset, auth } from "../utils/firebase";
+import classes from "./Reset.module.css";
 
 function Reset() {
   const [email, setEmail] = useState("");
@@ -11,30 +12,41 @@ function Reset() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loading) return;
-    if (user) navigate("/dashboard");
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
+    }
+    if (user) navigate("/");
   }, [user, loading]);
 
   return (
-    <div className="reset">
-      <div className="reset__container">
-        <input
+    <Container size="xs" className={classes.reset}>
+      <Box className={classes.resetContainer}>
+        <TextInput
           type="text"
-          className="reset__textBox"
+          className={classes.textBox}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="E-mail Address"
         />
-        <button className="reset__btn" onClick={() => sendPasswordReset(email)}>
+        <Button
+          fullWidth
+          className={classes.btn}
+          onClick={() => sendPasswordReset(email)}
+        >
           Send password reset email
-        </button>
+        </Button>
 
-        <div>
-          Don't have an account? <Link to="/register">Register</Link> now.
-        </div>
-      </div>
-    </div>
+        <Box className={classes.footerText}>
+          Don't have an account?{" "}
+          <Anchor component={Link} to="/register">
+            Register
+          </Anchor>{" "}
+          now.
+        </Box>
+      </Box>
+    </Container>
   );
 }
 
-export default Reset;
+export default Reset

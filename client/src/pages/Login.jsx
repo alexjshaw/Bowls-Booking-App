@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../utils/firebase";
+import { logInWithEmailAndPassword, signInWithGoogle, auth } from "../utils/firebase"
 import { useAuthState } from "react-firebase-hooks/auth";
-import "./Login.css";
+import { TextInput, Button, Box, Container, Anchor } from '@mantine/core';
+import classes from "./Login.module.css"
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -15,44 +16,42 @@ function Login() {
       // maybe trigger a loading screen
       return;
     }
-    if (user) navigate("/dashboard");
+    if (user) navigate("/");
   }, [user, loading]);
 
   return (
-    <div className="login">
-      <div className="login__container">
-        <input
+    <Container size="xs" className={classes.login}>
+      <Box className={classes.loginContainer}>
+        <TextInput
           type="text"
-          className="login__textBox"
+          className={classes.textBox}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="E-mail Address"
         />
-        <input
+        <TextInput
           type="password"
-          className="login__textBox"
+          className={classes.textBox}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
-        <button
-          className="login__btn"
-          onClick={() => logInWithEmailAndPassword(email, password)}
-        >
+        <Button fullWidth className={classes.btn} onClick={() => logInWithEmailAndPassword(email, password)}>
           Login
-        </button>
-        <button className="login__btn login__google" onClick={signInWithGoogle}>
+        </Button>
+        <Button fullWidth variant="outline" color="blue" className={`${classes.btn} ${classes.google}`} onClick={signInWithGoogle}>
           Login with Google
-        </button>
-        <div>
-          <Link to="/reset">Forgot Password</Link>
-        </div>
-        <div>
-          Don't have an account? <Link to="/register">Register</Link> now.
-        </div>
-      </div>
-    </div>
-  );
+        </Button>
+
+        <Box className={classes.footerText}>
+          <Anchor component={Link} to="/reset">Forgot Password</Anchor>
+        </Box>
+        <Box className={classes.footerText}>
+          Don't have an account? <Anchor component={Link} to="/register">Register</Anchor> now.
+        </Box>
+      </Box>
+    </Container>
+  )
 }
 
-export default Login;
+export default Login
