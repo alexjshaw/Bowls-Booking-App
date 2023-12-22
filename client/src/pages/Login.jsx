@@ -1,52 +1,58 @@
-import React, { useState } from 'react'
-import { auth } from '../utils/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../utils/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import "./Login.css";
 
-const Login = () => {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log(userCredential);
-      const user = userCredential.user;
-      localStorage.setItem('token', user.accessToken);
-      localStorage.setItem('user', JSON.stringify(user));
-      navigate("/");
-    } catch (error) {
-      console.error(error);
+  useEffect(() => {
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
     }
-  }
+    if (user) navigate("/dashboard");
+  }, [user, loading]);
 
   return (
-    <div>
-      <h1>Login Page</h1>
-      <form onSubmit={handleSubmit} className='login-form'>
+    <div className="login">
+      <div className="login__container">
         <input
-          type="email"
-          placeholder="Your Email"
-          required
+          type="text"
+          className="login__textBox"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          placeholder="E-mail Address"
         />
         <input
           type="password"
-          placeholder="Your Password"
-          required
+          className="login__textBox"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
         />
-        <button type="submit" className='login-button'>Login</button>
-      </form>
-      <p>Need to Signup? <Link to="/signup">Create Account</Link></p>
+        <button
+          className="login__btn"
+          onClick={() => logInWithEmailAndPassword(email, password)}
+        >
+          Login
+        </button>
+        <button className="login__btn login__google" onClick={signInWithGoogle}>
+          Login with Google
+        </button>
+        <div>
+          <Link to="/reset">Forgot Password</Link>
+        </div>
+        <div>
+          Don't have an account? <Link to="/register">Register</Link> now.
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
