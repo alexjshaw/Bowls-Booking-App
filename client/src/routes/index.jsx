@@ -4,16 +4,17 @@ import MyBookingsPage from "../pages/MyBookingsPage";
 import Register from "../pages/Register"
 import Login from "../pages/Login";
 import Reset from "../pages/Reset"
+import ProtectedRoute from "../components/ProtectedRoute";
 
 export default function Routes() {
   return useRoutes([
     {
       path: '/',
-      element: <BookingPage />
+      element: <ProtectedRoute><BookingPage /></ProtectedRoute>
     },
     {
       path: '/bookings',
-      element: <MyBookingsPage />
+      element: <ProtectedRoute><MyBookingsPage /></ProtectedRoute>
     },
     {
       path: '/register',
