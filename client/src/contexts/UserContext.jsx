@@ -1,5 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../utils/firebase.js'; // Import Firebase auth
 
 const UserContext = createContext();
 
@@ -15,9 +17,11 @@ export const UserProvider = ({ children }) => {
     club: ''
   });
 
-  const fetchUser = async (userId) => {
+  const [firebaseUser] = useAuthState(auth);
+
+  const fetchUser = async (firebaseUID) => {
     try {
-      const response = await fetch(`http://localhost:5000/user/${userId}`);
+      const response = await fetch(`http://localhost:5000/user/firebase/${firebaseUID}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -29,9 +33,10 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const userId = '6579c381f0143aa691b4f945'; // This will be dynamic in the future
-    fetchUser(userId);
-  }, []);
+    if (firebaseUser) {
+      fetchUser(firebaseUser.uid); // Use Firebase UID
+    }
+  }, [firebaseUser]);
 
   return (
     <UserContext.Provider value={{ user, setUser, fetchUser }}>

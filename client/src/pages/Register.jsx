@@ -74,8 +74,6 @@ function Register() {
         password
       );
       if (firebaseUID) {
-        console.log('firebaseUID', firebaseUID)
-        console.log('firebaseUID', typeof firebaseUID)
         await addUserToDatabase(firstName, lastName, email, phone, club, firebaseUID);
       }
     } catch (error) {
