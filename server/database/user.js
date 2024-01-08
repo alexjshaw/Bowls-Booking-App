@@ -14,7 +14,7 @@ class User {
 
   async getUser(query = {}) {
     try {
-      const user = await UserModel.findOne(query).exec(); // Use UserModel directly
+      const user = await UserModel.findOne(query).exec();
       return user;
     } catch (error) {
       throw error;

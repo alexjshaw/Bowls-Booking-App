@@ -26,7 +26,21 @@ const updateClub = async (req, res) => {
   }
 };
 
+const getClubs = async (req, res) => {
+  try {
+    const clubs = await clubDatabase.getClubs({})
+    if (!clubs) {
+      return res.status(404).send('No Clubs Found')
+    }
+
+    res.json(clubs)
+  } catch (error) {
+    return res.status(500).send('Server Error', error)
+  }
+}
+
 module.exports = {
   createClub,
-  updateClub
+  updateClub,
+  getClubs
 };

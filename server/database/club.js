@@ -20,6 +20,15 @@ class Club {
       throw new Error(error.message)
     }
   }
+
+  async getClubs(query = {}) {
+    try {
+      const clubs = await ClubModel.find(query).exec()
+      return clubs
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
 }
 
 module.exports = new Club();

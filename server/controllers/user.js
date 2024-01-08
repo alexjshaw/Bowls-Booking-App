@@ -33,7 +33,7 @@ const getUser = async (req, res) => {
 
     res.json(user);
   } catch (error) {
-    res.status(500).send('Server error', error);
+    return res.status(500).send('Server error', error);
   }
 };
 
