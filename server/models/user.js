@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Club",
     required: true
-  }
+  },
+  firebaseUID: { type: String, required: true}
 }, { timestamps: true })
 
 userSchema.index({ club: 1 });

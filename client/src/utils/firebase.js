@@ -38,10 +38,10 @@ const signInWithGoogle = async () => {
   }
 }
 
-const registerWithEmailAndPassword = async (name, email, password) => {
+const registerWithEmailAndPassword = async (email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
-    const user = res.user;
+    return res.user.uid;
   } catch (error) {
     console.error(error);
     alert(error.message);

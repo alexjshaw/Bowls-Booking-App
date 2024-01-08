@@ -12,6 +12,7 @@ const createUser = async (req, res) => {
       phone: req.body.phone,
       club: new mongoose.Types.ObjectId(req.body.club)
     }
+    console.log('query', query)
     const newUser = await userDatabase.createUser(query)
     return sendDataResponse(res, 201, newUser)
   } catch (error) {
