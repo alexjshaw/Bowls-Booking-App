@@ -93,10 +93,11 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
   
 
   const testFunction = () => {
-    console.log("currentDate", currentDate);
-    console.log("currentDate.format", currentDate.format("YYYY-MM-DD"));
-    console.log("selectedTimeSlot", selectedTimeSlot);
-    console.log("bookings", bookings);
+    // console.log("currentDate", currentDate);
+    // console.log("currentDate.format", currentDate.format("YYYY-MM-DD"));
+    // console.log("selectedTimeSlot", selectedTimeSlot);
+    // console.log("bookings", bookings);
+    console.log('user', user)
   };
 
   return (
