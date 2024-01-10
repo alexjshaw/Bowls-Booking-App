@@ -11,6 +11,7 @@ export default function TimeSelect({ selectedTimeSlot, setSelectedTimeSlot }) {
       {timeSlots.map((slot) => (
         <Button
           key={slot}
+          variant={slot === selectedTimeSlot ? "filled" : "outline"}
           onClick={() => setSelectedTimeSlot(slot)}
           className={slot === selectedTimeSlot ? classes.selectedTimeButton : classes.timeButton}
         >

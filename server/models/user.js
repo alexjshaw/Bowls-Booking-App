@@ -10,7 +10,9 @@ const userSchema = new mongoose.Schema({
     ref: "Club",
     required: true
   },
-  firebaseUID: { type: String, required: true}
+  firebaseUID: { type: String, required: true},
+  admin: { type: Boolean, default: false },
+  approved: { type: Boolean, default: false}
 }, { timestamps: true })
 
 userSchema.index({ club: 1 });

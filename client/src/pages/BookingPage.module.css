@@ -19,7 +19,7 @@
 }
 
 .rightColumn {
-  width: 120px;
+  width: 140px;
   background-color: var(--mantine-color-green-1);
   padding: var(--mantine-spacing-md);
 }

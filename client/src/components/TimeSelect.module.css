@@ -3,7 +3,14 @@
 }
 
 .selectedTimeButton {
-  background-color: blue;
+  background-color: green;
   color: white;
   padding: var(--mantine-spacing-xs);
+  border: 2px solid darkblue;
+  font-weight: bold;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.selectedTimeButton:active {
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
