@@ -1,27 +1,37 @@
-import React from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Navigate } from 'react-router-dom';
 import { auth } from "../utils/firebase";
 import { useUser } from "../contexts/UserContext";
+import React, { useEffect, useState } from 'react';
 
 function ProtectedRoute({ children }) {
-  // const [user, loading, error] = useAuthState(auth);
-  const { currentUser } = useUser();
+  const [user, loading, error] = useAuthState(auth);
+  const { currentUser, fetchCurrentUser } = useUser();
+  const [isUserFetched, setIsUserFetched] = useState(false);
 
-  console.log('user', currentUser)
+  useEffect(() => {
+    if (user && !currentUser._id) {
+      // Fetch the current user data
+      fetchCurrentUser(user.uid).then(() => {
+        setIsUserFetched(true);
+      });
+    } else {
+      setIsUserFetched(true);
+    }
+  }, [user, currentUser, fetchCurrentUser]);
 
-  // if (loading) {
-  //   return <div>Loading...</div>; // Or any loading component
-  // }
+  if (loading || !isUserFetched) {
+    return <div>Loading...</div>;
+  }
 
-  // if (!user) {
-  //   return <Navigate to="/login" />;
-  // }
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
 
-  // if (!user.approved) {
-  //   return <Navigate to="/waiting-for-approval" />
-  // }
-  
+  if (!currentUser.approved) {
+    return <Navigate to="/waiting-for-approval" />;
+  }
+
   return children;
 }
 
