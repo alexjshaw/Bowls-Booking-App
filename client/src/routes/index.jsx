@@ -19,7 +19,7 @@ export default function Routes() {
     },
     {
       path: '/waiting-for-approval',
-      element: <AwaitingApprovalPage />
+      element: <ProtectedRoute><AwaitingApprovalPage /></ProtectedRoute>
     },
     {
       path: '/register',
