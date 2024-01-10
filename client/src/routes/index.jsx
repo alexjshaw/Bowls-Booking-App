@@ -5,6 +5,7 @@ import Register from "../pages/Register"
 import Login from "../pages/Login";
 import Reset from "../pages/Reset"
 import ProtectedRoute from "../components/ProtectedRoute";
+import AwaitingApprovalPage from "../pages/AwaitingApprovalPage";
 
 export default function Routes() {
   return useRoutes([
@@ -15,6 +16,10 @@ export default function Routes() {
     {
       path: '/bookings',
       element: <ProtectedRoute><MyBookingsPage /></ProtectedRoute>
+    },
+    {
+      path: '/waiting-for-approval',
+      element: <AwaitingApprovalPage />
     },
     {
       path: '/register',

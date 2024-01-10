@@ -8,7 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./contexts/UserContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <BrowserRouter>
       <MantineProvider>
         <UserProvider>
@@ -16,5 +16,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </UserProvider>
       </MantineProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

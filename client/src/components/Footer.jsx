@@ -7,7 +7,7 @@ import { logout } from "../utils/firebase"
 
 export default function Footer() {
   const navigate = useNavigate();
-  const { user } = useUser(); // Access user state
+  const { currentUser } = useUser(); // Access user state
 
   const handleMyBookingsClick = () => {
     navigate("/bookings");

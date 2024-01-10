@@ -10,13 +10,13 @@ dayjs.extend(isSameOrAfter);
 
 export default function MyBookingsPage() {
   const [bookings, setBookings] = useState([]);
-  const { user } = useUser();
+  const { currentUser } = useUser();
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/booking?user=${user._id}`
+          `http://localhost:5000/booking?user=${currentUser._id}`
         );
 
         if (!response.ok) {
@@ -31,7 +31,7 @@ export default function MyBookingsPage() {
     };
 
     fetchBookings();
-  }, [user]);
+  }, [currentUser]);
 
   const isUpcoming = (date) => {
     return dayjs(date).isSameOrAfter(dayjs(), "day");

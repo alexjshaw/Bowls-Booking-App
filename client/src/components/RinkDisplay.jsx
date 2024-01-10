@@ -8,13 +8,13 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
   const [rinks, setRinks] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [triggerRefetch, setTriggerRefetch] = useState(false);
-  const { user } = useUser();
+  const { currentUser } = useUser();
 
   useEffect(() => {
     const fetchRinks = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/rink/byClub/${user.club}`
+          `http://localhost:5000/rink/byClub/${currentUser.club}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -42,11 +42,11 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
       }
     };
 
-    if (user.club) {
+    if (currentUser.club) {
       fetchRinks();
       fetchBookings();
     }
-  }, [user.club, currentDate, selectedTimeSlot, triggerRefetch]);
+  }, [currentUser.club, currentDate, selectedTimeSlot, triggerRefetch]);
 
   const isRinkBooked = (rinkId) => {
     return bookings.some(
@@ -65,7 +65,7 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
 
   const handleBookRink = async (rinkId) => {
     const bookingData = {
-      user: user._id,
+      user: currentUser._id,
       rink: rinkId,
       date: currentDate.format('YYYY-MM-DD'),
       time: selectedTimeSlot,
@@ -97,7 +97,7 @@ export default function RinkDisplay({ currentDate, selectedTimeSlot }) {
     // console.log("currentDate.format", currentDate.format("YYYY-MM-DD"));
     // console.log("selectedTimeSlot", selectedTimeSlot);
     // console.log("bookings", bookings);
-    console.log('user', user)
+    console.log('user', currentUser)
   };
 
   return (

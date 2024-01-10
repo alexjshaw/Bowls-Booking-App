@@ -8,25 +8,27 @@ const UserContext = createContext();
 export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({
+  const [currentUser, setCurrentUser] = useState({
     _id: '',
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
-    club: ''
+    club: '',
+    admin: null,
+    approved: null
   });
 
   const [firebaseUser] = useAuthState(auth);
 
-  const fetchUser = async (firebaseUID) => {
+  const fetchCurrentUser = async (firebaseUID) => {
     try {
       const response = await fetch(`http://localhost:5000/user/firebase/${firebaseUID}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const userData = await response.json();
-      setUser(userData);
+      setCurrentUser(userData);
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
@@ -34,12 +36,12 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     if (firebaseUser) {
-      fetchUser(firebaseUser.uid); // Use Firebase UID
+      fetchCurrentUser(firebaseUser.uid); // Use Firebase UID
     }
   }, [firebaseUser]);
 
   return (
-    <UserContext.Provider value={{ user, setUser, fetchUser }}>
+    <UserContext.Provider value={{ currentUser, setCurrentUser, fetchCurrentUser }}>
       {children}
     </UserContext.Provider>
   );
